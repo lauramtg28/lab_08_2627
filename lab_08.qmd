@@ -33,7 +33,7 @@ A running app does not pick up changes to its script, so after editing an app, s
 - [x] Run the shiny app.
 - [x] Add a `textOutput` to the `ui` which the `server` fills with a greeting using the name that has been entered: for example, "Hello Ada" if the name is Ada.
 - [x] Add a `numericInput` to the `ui` for the user to input their age. Make the UI print the age somewhere.
-- [ ] Look up the [`selectInput` control](https://shiny.posit.co/r/reference/shiny/latest/selectinput.html). Add a `selectInput` control that lets you choose a favourite colour from a list. Make the UI print the selected colour somewhere.
+- [x] Look up the [`selectInput` control](https://shiny.posit.co/r/reference/shiny/latest/selectinput.html). Add a `selectInput` control that lets you choose a favourite colour from a list. Make the UI print the selected colour somewhere.
 - [ ] **Extension:** Look up the `renderUI` function and use it to change the colour of the greeting to the chosen colour.
 
 #### Hint: Using renderUI to change greeting colour
@@ -54,11 +54,11 @@ output$coloured_text <- renderUI({
 
 #### Before a Name Is Entered
 
-- [ ] Restart your app, and look at the heading and the greeting before you type a name. What do they show?
-- [ ] Use `req()` (see the Week 8 notes) so that the heading is just "Shiny App", and no greeting is displayed, until a name has been entered. Where is the best place to put the `req()` for the greeting?
+- [x] Restart your app, and look at the heading and the greeting before you type a name. What do they show?
+- [x] Use `req()` (see the Week 8 notes) so that the heading is just "Shiny App", and no greeting is displayed, until a name has been entered. Where is the best place to put the `req()` for the greeting?
 
 ::: {.solution}
-
+The best place is to put it before it starts to read the function.
 :::
 
 #### The Reactive Graph

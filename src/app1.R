@@ -14,21 +14,34 @@ ui <- fluidPage(
     sidebarPanel(
       textInput("name", label = "Enter your Name"),
       numericInput("age", label = "Enter your age", value = 18),
-      selectInput("colour", label = "What is yout favourite colour?", c("Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Brown"))
+      selectInput("colour", label = "What is yout favourite colour?", 
+                  c("red", "blue", "green", "yellow", "purple", "orange", "magenta", "brown"))
     ),
     mainPanel(
       textOutput("greeting"),
-      textOutput("age_r"),
-      textOutput("favourite_colour")
+      textOutput("favourite_colour"),
+      uiOutput("coloured_text")
     )
   )
 )
 
 server <- function(input, output, session) {
-  output$title <- renderText(paste0(input$name, "'s"))
-  output$greeting <- renderText(paste("Hello" , input$name))
-  output$age_r <- renderText(paste("Your age is", input$age))
-  output$favourite_colour <- renderText(paste("You have selected", input$colour, "as your favourite"))
+  output$title <- renderText({req(input$name) 
+    paste0(input$name, "'s")
+    })
+  
+  greeting <- reactive({
+    req(input$name)
+    paste0("Hello ", input$name, " you are ", input$age, " years old")
+    })
+  
+  output$greeting <- renderText(greeting())
+  
+  output$favourite_colour <- renderText(
+    paste("You have selected", input$colour, "as your favourite Colour"))
+  output$coloured_text <- renderUI({ 
+    span(style = paste0("color:", input$colour, ";", greeting())) 
+    })
 }
 
 shinyApp(ui, server)
