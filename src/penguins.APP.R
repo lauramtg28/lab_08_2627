@@ -11,19 +11,27 @@ ui <- fluidPage(
       selectInput(
         "x_axis",
         "Choose an x axis:",
-        choices = c("Please select" = "", "Bill length" = "bill_length_mm", "bill depth" = "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
+        choices = c("Bill length" = "bill_length_mm", 
+                    "bill depth" = "bill_depth_mm",
+                    "Flipper length" = "flipper_length_mm",
+                    "Body Mass" = "body_mass_g", "year")),
       selectInput(
         "y_axis",
         "Choose a y axis:",
-        choices = c("Please select" = "","Bill length" =  "bill_length_mm", "bill depth" =  "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
+        choices = c("bill depth" = "bill_depth_mm",
+                    "Bill length" = "bill_length_mm",
+                    "Flipper length" = "flipper_length_mm",
+                    "Body Mass" = "body_mass_g", "year")),
       selectInput(
         "colour",
         "Choose a category:",
-        choices = c("species","island","sex")),
+        choices = c("island","sex")),
       textInput("plot_title", label  = "Title of your graph:"),
       textInput("plot_x", label = "What is the x axis:"),
       textInput("plot_y", label = "What is the y axis:"),
-      #selectInput("species", label = "Choose a species", choices = "Adelie", "Gentoo", "Chinstrap")
+      selectInput("species", 
+                  label = "Choose a species", 
+                  choices = "Adelie", "Gentoo", "Chinstrap")
     ),
     mainPanel(
       plotOutput("plot"),
@@ -32,15 +40,20 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  #chosen_penguins <- reactive({
-   # penguins #|>
-      #filter(
-       # species == input$species
-     # )
-  #})
+  chosen_penguins <- reactive({
+    penguins |>
+      filter(
+        species == input$species
+      )
+  })
   
   output$plot <- renderPlot({
-    plot <- ggplot(penguins, aes(x = penguins[[input$x_axis]], y = penguins[[input$y_axis]], colour = penguins[[input$colour]])) +
+    req(input$species)
+    req(input$x_axis)
+    req(input$y_axis)
+    plot <- ggplot(chosen_penguins(), aes(x = chosen_penguins()[[input$x_axis]],
+                                          y = chosen_penguins()[[input$y_axis]], 
+                                          colour = chosen_penguins()[[input$colour]])) +
       geom_point() +
       coord_cartesian() +
       labs(

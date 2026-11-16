@@ -32,16 +32,16 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   selected <- reactive({
-    penguins #|>
- #     filter(
-  #      species == input$species,
-   #     body_mass_g >= input$mass[1],
-    #    body_mass_g <= input$mass[2]
-     # )
+    penguins |>
+      filter(
+        species == input$species,
+        body_mass_g >= input$mass[1],
+        body_mass_g <= input$mass[2]
+      )
   })
   
   output$plot <- renderPlot({
-   # req(input$species)   # do nothing until a species is chosen
+    req(input$species)   # do nothing until a species is chosen
     plot <- ggplot(selected(), aes(x = flipper_length_mm, y = body_mass_g)) +
       geom_point() +
       coord_cartesian(xlim = c(170, 235), ylim = c(2700, 6300)) +
