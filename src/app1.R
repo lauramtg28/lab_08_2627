@@ -19,8 +19,7 @@ ui <- fluidPage(
     ),
     mainPanel(
       textOutput("greeting"),
-      textOutput("favourite_colour"),
-      uiOutput("coloured_text")
+      uiOutput("coloured_greeting")
     )
   )
 )
@@ -32,16 +31,12 @@ server <- function(input, output, session) {
   
   greeting <- reactive({
     req(input$name)
-    paste0("Hello ", input$name, " you are ", input$age, " years old")
+    paste0("Hello ", input$name, " you are ", input$age, " years old and you like ", input$colour)
     })
   
-  output$greeting <- renderText(greeting())
-  
-  output$favourite_colour <- renderText(
-    paste("You have selected", input$colour, "as your favourite Colour"))
-  output$coloured_text <- renderUI({ 
-    span(style = paste0("color:", input$colour, ";", greeting())) 
-    })
+  output$coloured_greeting <- renderUI( 
+    span(style = paste0("color:", input$colour) ,greeting()) 
+    )
 }
 
 shinyApp(ui, server)
