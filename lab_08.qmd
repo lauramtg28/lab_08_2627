@@ -29,10 +29,10 @@ A running app does not pick up changes to its script, so after editing an app, s
 
 ### Task 1: A First App
 
-- [ ] Open the file `src/app1.R`
-- [ ] Run the shiny app.
-- [ ] Add a `textOutput` to the `ui` which the `server` fills with a greeting using the name that has been entered: for example, "Hello Ada" if the name is Ada.
-- [ ] Add a `numericInput` to the `ui` for the user to input their age. Make the UI print the age somewhere.
+- [x] Open the file `src/app1.R`
+- [x] Run the shiny app.
+- [x] Add a `textOutput` to the `ui` which the `server` fills with a greeting using the name that has been entered: for example, "Hello Ada" if the name is Ada.
+- [x] Add a `numericInput` to the `ui` for the user to input their age. Make the UI print the age somewhere.
 - [ ] Look up the [`selectInput` control](https://shiny.posit.co/r/reference/shiny/latest/selectinput.html). Add a `selectInput` control that lets you choose a favourite colour from a list. Make the UI print the selected colour somewhere.
 - [ ] **Extension:** Look up the `renderUI` function and use it to change the colour of the greeting to the chosen colour.
 
