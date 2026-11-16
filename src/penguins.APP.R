@@ -11,18 +11,19 @@ ui <- fluidPage(
       selectInput(
         "x_axis",
         "Choose an x axis:",
-        choices = c("bill_length_mm", "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
+        choices = c("Please select" = "", "Bill length" = "bill_length_mm", "bill depth" = "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
       selectInput(
         "y_axis",
         "Choose a y axis:",
-        choices = c("bill_length_mm", "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
+        choices = c("Please select" = "","Bill length" =  "bill_length_mm", "bill depth" =  "bill_depth_mm","flipper_length_mm","body_mass_g","year")),
       selectInput(
         "colour",
         "Choose a category:",
         choices = c("species","island","sex")),
       textInput("plot_title", label  = "Title of your graph:"),
       textInput("plot_x", label = "What is the x axis:"),
-      textInput("plot_y", label = "What is the y axis:")
+      textInput("plot_y", label = "What is the y axis:"),
+      #selectInput("species", label = "Choose a species", choices = "Adelie", "Gentoo", "Chinstrap")
     ),
     mainPanel(
       plotOutput("plot"),
@@ -31,19 +32,24 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  chosen_penguins <- reactive({
-    penguins
-  })
+  #chosen_penguins <- reactive({
+   # penguins #|>
+      #filter(
+       # species == input$species
+     # )
+  #})
   
-  output$plot <- renderPlot(
-    plot <- ggplot(chosen_penguins(), aes(x = input$x_axis, y = input$y_axis, colour = input$colour)) +
+  output$plot <- renderPlot({
+    plot <- ggplot(penguins, aes(x = penguins[[input$x_axis]], y = penguins[[input$y_axis]], colour = penguins[[input$colour]])) +
       geom_point() +
+      coord_cartesian() +
       labs(
         title = paste(input$plot_title),
         x = input$plot_x,
         y = input$plot_y
       )
-  )
+    plot
+  })
   
 }
 
