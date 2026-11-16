@@ -42,9 +42,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   chosen_penguins <- reactive({
     penguins |>
-      filter(
-        species == input$species
-      )
+      filter(species == input$species)
   })
   
   output$plot <- renderPlot({
