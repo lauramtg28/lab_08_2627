@@ -31,7 +31,7 @@ ui <- fluidPage(
       textInput("plot_y", label = "What is the y axis:"),
       selectInput("species", 
                   label = "Choose a species", 
-                  choices = "Adelie", "Gentoo", "Chinstrap")
+                  choices = c("Adelie", "Gentoo", "Chinstrap"))
     ),
     mainPanel(
       plotOutput("plot"),
@@ -47,11 +47,7 @@ server <- function(input, output, session) {
   
   output$plot <- renderPlot({
     req(input$species)
-    req(input$x_axis)
-    req(input$y_axis)
-    plot <- ggplot(chosen_penguins(), aes(x = chosen_penguins()[[input$x_axis]],
-                                          y = chosen_penguins()[[input$y_axis]], 
-                                          colour = chosen_penguins()[[input$colour]])) +
+    plot <- ggplot(chosen_penguins(), aes(x = chosen_penguins[[input$x_axis]], y = chosen_penguins[[input$y_axis]], colour = chosen_penguins[[input$colour]])) +
       geom_point() +
       coord_cartesian() +
       labs(
