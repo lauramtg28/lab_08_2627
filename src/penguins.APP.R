@@ -34,7 +34,7 @@ ui <- fluidPage(
                   choices = c("Adelie", "Gentoo", "Chinstrap"))
     ),
     mainPanel(
-      plotOutput("plot"),
+      plotOutput("plot")
     )
   )
 )
@@ -46,8 +46,7 @@ server <- function(input, output, session) {
   })
   
   output$plot <- renderPlot({
-    req(input$species)
-    plot <- ggplot(chosen_penguins(), aes(x = chosen_penguins[[input$x_axis]], y = chosen_penguins[[input$y_axis]], colour = chosen_penguins[[input$colour]])) +
+    plot <- ggplot(chosen_penguins(), aes(x = .data[[input$x_axis]], y = .data[[input$y_axis]], colour = .data[[input$colour]])) +
       geom_point() +
       coord_cartesian() +
       labs(
